@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pl.com.suwala.inventoryapp.CatalogActivity">
+    <item
+        android:id="@+id/dummy_data"
+        android:orderInCategory="100"
+        android:title="@string/create_dummy_data"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/clear_database"
+        android:orderInCategory="100"
+        android:title="@string/clear_database"
+        app:showAsAction="never" />
+</menu>
