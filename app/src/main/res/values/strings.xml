@@ -2,4 +2,22 @@
     <string name="app_name">InventoryApp</string>
     <string name="create_dummy_data">Insert dummy data</string>
     <string name="clear_database">Delete all data</string>
+    <string name="editor_activity_title_new_pet">Add a Product</string>
+    <string name="editor_activity_title_edit_pet">Edit Product</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="editor_insert_pet_successful">Product saved</string>
+    <string name="editor_insert_pet_failed">Error with saving pet</string>
+    <string name="editor_update_pet_successful">Product updated</string>
+    <string name="editor_update_pet_failed">Error with updating pet</string>
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="editor_delete_pet_successful">Product deleted</string>
+    <string name="editor_delete_pet_failed">Error with deleting product</string>
+    <string name="delete_dialog_msg">Delete this product?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="category_overview">Overview</string>
+    
 </resources>

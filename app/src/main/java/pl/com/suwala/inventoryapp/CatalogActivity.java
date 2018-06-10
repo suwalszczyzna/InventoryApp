@@ -1,8 +1,14 @@
 package pl.com.suwala.inventoryapp;
 
+import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,117 +18,111 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
-
 import pl.com.suwala.inventoryapp.data.ProductDbHelper;
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 
-public class CatalogActivity extends AppCompatActivity {
+public class CatalogActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
     public static final String TAG = CatalogActivity.class.getSimpleName();
-    ;
+    private static final int PRODUCT_LOADER = 0;
+    ProductCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                startActivity(intent);
             }
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayDatabaseInfo();
-    }
+        ListView productListView = (ListView) findViewById(R.id.list);
 
-    private void insertData() {
-        ProductDbHelper dbHelper = new ProductDbHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Book");
-        values.put(ProductEntry.COLUMN_PRICE, 14);
-        values.put(ProductEntry.COLUMN_QUANTITY, 2);
-        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Max");
-        values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "555-555-555");
-        long newRowId = db.insert(ProductEntry.TABLE_NAME, null, values);
-        Log.d(TAG, "insertData(): new row added");
-    }
+        View emptyView = findViewById(R.id.empty_view);
+        productListView.setEmptyView(emptyView);
 
-    private Cursor queryData() {
-        ProductDbHelper dbHelper = new ProductDbHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.query(ProductEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-        return c;
-    }
+        mCursorAdapter = new ProductCursorAdapter(this, null);
+        productListView.setAdapter(mCursorAdapter);
 
-    private void displayDatabaseInfo() {
-        Cursor c = queryData();
-        TextView displayView = findViewById(R.id.text_view);
-        try {
+        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-            displayView.setText("The \"" + ProductEntry.TABLE_NAME + "\" table contains " + c.getCount() + " rows.\n\n");
-
-            int idColumnIndex = c.getColumnIndex(ProductEntry._ID);
-            int nameColumnIndex = c.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
-            int priceColumnIndex = c.getColumnIndex(ProductEntry.COLUMN_PRICE);
-            int qtyColumnIndex = c.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
-            int supNameColumnIndex = c.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
-            int supPhoneColumnIndex = c.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_PHONE);
-
-            while (c.moveToNext()) {
-                int currendId = c.getInt(idColumnIndex);
-                String currendName = c.getString(nameColumnIndex);
-                int currendPrice = c.getInt(priceColumnIndex);
-                int currendQty = c.getInt(qtyColumnIndex);
-                String currendSupName = c.getString(supNameColumnIndex);
-                String currendSupPhone = c.getString(supPhoneColumnIndex);
-
-                displayView.append(
-                        "\n" + currendId + " - "
-                                + currendName + " - "
-                                + currendPrice + " - "
-                                + currendQty + " - "
-                                + currendSupName + " - "
-                                + currendSupPhone);
-                Log.d(TAG, "displayDatabaseInfo(): displayView.append called");
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+                intent.setData(currentProductUri);
+                startActivity(intent);
             }
+        });
 
-        } finally {
-            c.close();
-            Log.d(TAG, "displayDatabaseInfo(): cursor closed");
-        }
+        getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
+    }
+
+    private void insertProduct() {
+        ContentValues values = new ContentValues();
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Toto");
+        values.put(ProductEntry.COLUMN_PRICE, 7);
+        values.put(ProductEntry.COLUMN_QUANTITY, 14);
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Damian");
+        values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "817450270");
+
+        Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+    }
+
+    private void deleteAllProducts() {
+        int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from product database");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.dummy_data:
-                insertData();
-                displayDatabaseInfo();
+                insertProduct();
                 return true;
             case R.id.clear_database:
+                deleteAllProducts();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                ProductEntry._ID,
+                ProductEntry.COLUMN_PRODUCT_NAME,
+                ProductEntry.COLUMN_SUPPLIER_NAME };
+
+        return new CursorLoader(this,   // Parent activity context
+                ProductEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }
