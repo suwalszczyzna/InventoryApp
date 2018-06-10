@@ -50,7 +50,7 @@ public class ProductProvider extends ContentProvider {
                         null, null, sortOrder);
                 break;
             case PRODUCT_ID:
-                selection = String.valueOf(ProductEntry._ID) + " = ?";
+                selection = ProductEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
                 cursor = database.query(ProductEntry.TABLE_NAME, projection, selection, selectionArgs,
@@ -114,6 +114,7 @@ public class ProductProvider extends ContentProvider {
             case PRODUCTS:
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             case PRODUCT_ID:
+                selection = ProductEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             default:
