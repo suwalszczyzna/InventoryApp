@@ -59,8 +59,14 @@
 
 
     <style name="delete_buttons">
-        <item name="android:background">none</item>
+        <item name="android:background">@color/colorWhiteText</item>
         <item name="android:textColor">@color/colorWarning</item>
     </style>
+
+    <style name="action_button">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhiteText</item>
+    </style>
+
 
 </resources>

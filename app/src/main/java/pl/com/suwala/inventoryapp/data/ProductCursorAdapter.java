@@ -15,6 +15,7 @@ import android.widget.Toast;
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 import java.util.Locale;
 import pl.com.suwala.inventoryapp.R;
+import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class ProductCursorAdapter extends CursorAdapter {
 
@@ -42,16 +43,11 @@ public class ProductCursorAdapter extends CursorAdapter {
         double price = cursor.getDouble(priceColumnIndex);
         String quantity = cursor.getString(quantityColumnIndex);
 
-        Currency currency = null;
-        String symbol = "$";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            currency = Currency.getInstance(Locale.getDefault());
-            symbol = currency.getCurrencyCode();
-        }
+        InventoryUtils utils = new InventoryUtils();
 
         productNameTextView.setText(productName);
-        priceTextView.setText(String.format("%s %s",price,symbol));
-        quantityTextView.setText(String.format("%s pcs", quantity));
+        priceTextView.setText(utils.getPriceFormat(String.format("%s", price), utils.getCurrencySymbol()));
+        quantityTextView.setText(utils.getQuantityFormat(quantity));
 
         final String[] selectionArgs = {productName};
         final String idString = cursor.getString(cursor.getColumnIndex(ProductEntry._ID));

@@ -17,7 +17,6 @@
     <string name="editor_delete_product_failed">Error with deleting product</string>
     <string name="delete_dialog_msg">Delete this product?</string>
     <string name="delete">Delete</string>
-    <string name="delete_button">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="category_overview">Overview</string>
     <string name="there_is_no_product">There is no product</string>
@@ -28,8 +27,9 @@
     <string name="edit_product_button">Edit product</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
-    <string name="price">Price:</string>
-    <string name="product">Product:</string>
-    <string name="supplier">Supplier:</string>
+    <string name="price">Price</string>
+    <string name="product">Product</string>
+    <string name="supplier">Supplier</string>
     <string name="order">Order</string>
+    <string name="error_subtract_quantity">Quantity must by grater than 0!</string>
 </resources>

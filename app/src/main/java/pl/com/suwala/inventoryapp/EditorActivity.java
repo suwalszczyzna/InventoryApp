@@ -25,10 +25,11 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
+import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
-
+    private InventoryUtils utils = new InventoryUtils();
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
     private Uri currentProductUri;
@@ -71,13 +72,7 @@ public class EditorActivity extends AppCompatActivity implements
         quantityText = findViewById(R.id.quantity_detail);
         labelUnit = findViewById(R.id.label_price_units);
 
-        Currency currency = null;
-        String symbol = "$";
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            currency = Currency.getInstance(Locale.getDefault());
-            symbol = currency.getCurrencyCode();
-        }
-        labelUnit.setText(symbol);
+        labelUnit.setText(utils.getCurrencySymbol());
 
         productNameText.setOnTouchListener(touchListener);
         supplierNameText.setOnTouchListener(touchListener);
