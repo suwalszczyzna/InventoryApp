@@ -45,4 +45,22 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <style name="subtext">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Main_list_text">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+
+    <style name="delete_buttons">
+        <item name="android:background">none</item>
+        <item name="android:textColor">@color/colorWarning</item>
+    </style>
+
 </resources>

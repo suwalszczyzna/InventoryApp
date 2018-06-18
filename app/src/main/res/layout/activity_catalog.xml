@@ -10,7 +10,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <!-- Empty view for the list -->
     <RelativeLayout
@@ -21,10 +21,10 @@
 
         <ImageView
             android:id="@+id/empty_shelter_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_box" />
 
         <TextView
             android:id="@+id/empty_title_text"
@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="Nothing to show"
+            android:text="@string/there_is_no_product"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="Nothing to show"
+            android:text="@string/add_something"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
     </RelativeLayout>

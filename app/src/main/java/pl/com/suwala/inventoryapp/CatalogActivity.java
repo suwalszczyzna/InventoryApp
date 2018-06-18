@@ -1,34 +1,36 @@
 package pl.com.suwala.inventoryapp;
 
+import android.app.Dialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import pl.com.suwala.inventoryapp.data.ProductDbHelper;
+
+import pl.com.suwala.inventoryapp.data.ProductContract;
+import pl.com.suwala.inventoryapp.data.ProductCursorAdapter;
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 
 public class CatalogActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
     public static final String TAG = CatalogActivity.class.getSimpleName();
     private static final int PRODUCT_LOADER = 0;
-    ProductCursorAdapter mCursorAdapter;
+    ProductCursorAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +45,19 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
-        ListView productListView = (ListView) findViewById(R.id.list);
+        ListView productListView = findViewById(R.id.list);
 
         View emptyView = findViewById(R.id.empty_view);
         productListView.setEmptyView(emptyView);
 
-        mCursorAdapter = new ProductCursorAdapter(this, null);
-        productListView.setAdapter(mCursorAdapter);
+        cursorAdapter = new ProductCursorAdapter(this, null);
+        productListView.setAdapter(cursorAdapter);
 
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
-                Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+                Uri currentProductUri = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, id);
                 intent.setData(currentProductUri);
                 startActivity(intent);
             }
@@ -67,11 +68,11 @@ public class CatalogActivity extends AppCompatActivity implements
 
     private void insertProduct() {
         ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Toto");
+        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "CD Player");
         values.put(ProductEntry.COLUMN_PRICE, 7);
         values.put(ProductEntry.COLUMN_QUANTITY, 14);
-        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Damian");
-        values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "817450270");
+        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Sony");
+        values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "88456325");
 
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
@@ -106,7 +107,8 @@ public class CatalogActivity extends AppCompatActivity implements
         String[] projection = {
                 ProductEntry._ID,
                 ProductEntry.COLUMN_PRODUCT_NAME,
-                ProductEntry.COLUMN_SUPPLIER_NAME };
+                ProductEntry.COLUMN_PRICE,
+                ProductEntry.COLUMN_QUANTITY};
 
         return new CursorLoader(this,   // Parent activity context
                 ProductEntry.CONTENT_URI,   // Provider content URI to query
@@ -118,11 +120,13 @@ public class CatalogActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mCursorAdapter.swapCursor(data);
+        cursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mCursorAdapter.swapCursor(null);
+        cursorAdapter.swapCursor(null);
     }
+
+
 }

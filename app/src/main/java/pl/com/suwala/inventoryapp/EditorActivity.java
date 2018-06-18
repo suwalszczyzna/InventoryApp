@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.icu.util.Currency;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -18,7 +19,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 
@@ -33,15 +37,17 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText priceText;
     private EditText quantityText;
     private EditText supplierPhoneText;
+    private TextView labelUnit;
 
     private boolean productHasChanged = false;
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             productHasChanged = true;
             return false;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +56,34 @@ public class EditorActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         currentProductUri = intent.getData();
         if (currentProductUri == null) {
-            setTitle(getString(R.string.editor_activity_title_new_pet));
+            setTitle(getString(R.string.editor_activity_title_new_product));
             invalidateOptionsMenu();
         } else {
-            setTitle(getString(R.string.editor_activity_title_edit_pet));
+            setTitle(getString(R.string.editor_activity_title_edit_product));
 
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
-        productNameText = (EditText) findViewById(R.id.edit_product_name);
-        supplierNameText = (EditText) findViewById(R.id.edit_supplier_name);
-        supplierPhoneText = (EditText) findViewById(R.id.edit_supplier_phone);
-        priceText = (EditText) findViewById(R.id.edit_price);
-        quantityText = (EditText) findViewById(R.id.edit_quantity);
+        productNameText = findViewById(R.id.edit_product_name);
+        supplierNameText = findViewById(R.id.edit_supplier_name);
+        supplierPhoneText = findViewById(R.id.edit_supplier_phone);
+        priceText = findViewById(R.id.edit_price);
+        quantityText = findViewById(R.id.quantity_detail);
+        labelUnit = findViewById(R.id.label_price_units);
 
-        productNameText.setOnTouchListener(mTouchListener);
-        supplierNameText.setOnTouchListener(mTouchListener);
-        supplierPhoneText.setOnTouchListener(mTouchListener);
-        priceText.setOnTouchListener(mTouchListener);
-        quantityText.setOnTouchListener(mTouchListener);
+        Currency currency = null;
+        String symbol = "$";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            currency = Currency.getInstance(Locale.getDefault());
+            symbol = currency.getCurrencyCode();
+        }
+        labelUnit.setText(symbol);
+
+        productNameText.setOnTouchListener(touchListener);
+        supplierNameText.setOnTouchListener(touchListener);
+        supplierPhoneText.setOnTouchListener(touchListener);
+        priceText.setOnTouchListener(touchListener);
+        quantityText.setOnTouchListener(touchListener);
 
     }
 
@@ -77,7 +92,7 @@ public class EditorActivity extends AppCompatActivity implements
         String supplierNameString = supplierNameText.getText().toString().trim();
         String supplierPhoneString = supplierPhoneText.getText().toString().trim();
         String priceString = priceText.getText().toString().trim();
-        String quantityString = priceText.getText().toString().trim();
+        String quantityString = quantityText.getText().toString().trim();
 
         if (currentProductUri == null &&
                 TextUtils.isEmpty(productNameString) && TextUtils.isEmpty(supplierNameString)) {
@@ -99,26 +114,26 @@ public class EditorActivity extends AppCompatActivity implements
         if (!TextUtils.isEmpty(quantityString)) {
             quantity = Integer.parseInt(quantityString);
         }
-        values.put(ProductEntry.COLUMN_PRICE, quantity);
+        values.put(ProductEntry.COLUMN_QUANTITY, quantity);
 
         if (currentProductUri == null) {
             Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
 
             if (newUri == null) {
 
-                Toast.makeText(this, getString(R.string.editor_insert_pet_failed),
+                Toast.makeText(this, getString(R.string.editor_insert_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.editor_insert_pet_successful),
+                Toast.makeText(this, getString(R.string.editor_insert_product_successful),
                         Toast.LENGTH_SHORT).show();
             }
         } else {
             int rowsAffected = getContentResolver().update(currentProductUri, values, null, null);
             if (rowsAffected == 0) {
-                Toast.makeText(this, getString(R.string.editor_update_pet_failed),
+                Toast.makeText(this, getString(R.string.editor_update_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.editor_update_pet_successful),
+                Toast.makeText(this, getString(R.string.editor_update_product_successful),
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -216,15 +231,15 @@ public class EditorActivity extends AppCompatActivity implements
         if (cursor.moveToFirst()) {
             int productNameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRICE);
-            int quantityIndex = cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
+            int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
             int supplierNameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_NAME);
             int supplierPhoneColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPPLIER_PHONE);
 
             String productName = cursor.getString(productNameColumnIndex);
             String supplierName = cursor.getString(supplierNameColumnIndex);
             String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
-            int quantity = cursor.getInt(quantityIndex);
             int price = cursor.getInt(priceColumnIndex);
+            int quantity = cursor.getInt(quantityColumnIndex);
 
             productNameText.setText(productName);
             supplierNameText.setText(supplierName);
@@ -268,7 +283,7 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                deletePet();
+                deleteProduct();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -283,15 +298,15 @@ public class EditorActivity extends AppCompatActivity implements
         alertDialog.show();
     }
 
-    private void deletePet() {
+    private void deleteProduct() {
         if (currentProductUri != null) {
             int rowsDeleted = getContentResolver().delete(currentProductUri, null, null);
 
             if (rowsDeleted == 0) {
-                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
+                Toast.makeText(this, getString(R.string.editor_delete_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
+                Toast.makeText(this, getString(R.string.editor_delete_product_successful),
                         Toast.LENGTH_SHORT).show();
             }
         }

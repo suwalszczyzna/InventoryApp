@@ -6,7 +6,8 @@ import android.provider.BaseColumns;
 
 public final class ProductContract {
 
-    private ProductContract() {}
+    private ProductContract() {
+    }
 
     public static final String CONTENT_AUTHORITY = "pl.com.suwala.inventoryapp";
 
