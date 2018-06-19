@@ -19,7 +19,7 @@
     <string name="delete_dialog_msg">Czy na pewno chcesz usunąć ten produkt?</string>
     <string name="delete">Usuń</string>
     <string name="cancel">Anuluj</string>
-    <string name="category_overview">Przegląd kategorii</string>
+    <string name="category_overview">Informacje ogólne</string>
     <string name="there_is_no_product">Brak produktów</string>
     <string name="add_something">Śmiało, dodaj coś!</string>
     <string name="sale">Sprzedaj</string>

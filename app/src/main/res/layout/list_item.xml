@@ -61,7 +61,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:focusable="false"
         android:text="@string/sale"
         tools:text="Sale" />
