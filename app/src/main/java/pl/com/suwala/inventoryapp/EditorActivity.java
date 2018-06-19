@@ -1,5 +1,6 @@
 package pl.com.suwala.inventoryapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -38,7 +39,6 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText priceText;
     private EditText quantityText;
     private EditText supplierPhoneText;
-    private TextView labelUnit;
 
     private boolean productHasChanged = false;
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
@@ -50,6 +50,7 @@ public class EditorActivity extends AppCompatActivity implements
     };
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class EditorActivity extends AppCompatActivity implements
         supplierPhoneText = findViewById(R.id.edit_supplier_phone);
         priceText = findViewById(R.id.edit_price);
         quantityText = findViewById(R.id.quantity_detail);
-        labelUnit = findViewById(R.id.label_price_units);
+        TextView labelUnit = findViewById(R.id.label_price_units);
 
         labelUnit.setText(utils.getCurrencySymbol());
 
@@ -89,6 +90,12 @@ public class EditorActivity extends AppCompatActivity implements
         String priceString = priceText.getText().toString().trim();
         String quantityString = quantityText.getText().toString().trim();
 
+        if(productNameString.isEmpty() || supplierNameString.isEmpty() || priceString.isEmpty() || quantityString.isEmpty()){
+            Toast.makeText(this, getString(R.string.required_fields),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (currentProductUri == null &&
                 TextUtils.isEmpty(productNameString) && TextUtils.isEmpty(supplierNameString)) {
             return;
@@ -103,6 +110,7 @@ public class EditorActivity extends AppCompatActivity implements
         if (!TextUtils.isEmpty(priceString)) {
             price = Integer.parseInt(priceString);
         }
+
         values.put(ProductEntry.COLUMN_PRICE, price);
 
         int quantity = 0;
@@ -132,6 +140,7 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
+        finish();
     }
 
     @Override
@@ -157,7 +166,6 @@ public class EditorActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveProduct();
-                finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -239,8 +247,8 @@ public class EditorActivity extends AppCompatActivity implements
             productNameText.setText(productName);
             supplierNameText.setText(supplierName);
             supplierPhoneText.setText(supplierPhone);
-            priceText.setText(Integer.toString(price));
-            quantityText.setText(Integer.toString(quantity));
+            priceText.setText(String.format("%s", price));
+            quantityText.setText(String.format("%s", quantity));
         }
     }
 

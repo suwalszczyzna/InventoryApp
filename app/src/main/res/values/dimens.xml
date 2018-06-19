@@ -1,4 +1,11 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="detail_padding">8dp</dimen>
+    <dimen name="small_padding_list_item">4dp</dimen>
+    <dimen name="empty_inventory_image">64dp</dimen>
+    <dimen name="subtitle_text_margin">8dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="editText_size">18sp</dimen>
+    <dimen name="units_text_size">12sp</dimen>
+    <dimen name="unit_padding_layout">4dp</dimen>
 </resources>

@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/medium_margin">
 
         <TextView
             style="@style/CategoryStyle"
@@ -22,32 +23,32 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/edit_product_name"
                 style="@style/EditorFieldStyle"
                 android:fontFamily="sans-serif"
-                android:hint="Product Name"
+                android:hint="@string/product_name_hint"
                 android:inputType="textCapWords"
-                android:textSize="14sp" />
+                android:textSize="@dimen/editText_size" />
 
             <EditText
                 android:id="@+id/edit_supplier_name"
                 style="@style/EditorFieldStyle"
                 android:fontFamily="sans-serif"
-                android:hint="Supplier name"
+                android:hint="@string/supplier_name_hint"
                 android:inputType="textCapWords"
-                android:textSize="14sp" />
+                android:textSize="@dimen/editText_size" />
 
             <EditText
                 android:id="@+id/edit_supplier_phone"
                 style="@style/EditorFieldStyle"
                 android:fontFamily="sans-serif"
-                android:hint="Supplier phone"
+                android:hint="@string/supplier_phone_hint"
                 android:inputType="textCapWords"
-                android:textSize="14sp" />
+                android:textSize="@dimen/editText_size"
+                tools:ignore="TextFields" />
         </LinearLayout>
     </LinearLayout>
 
@@ -59,29 +60,30 @@
 
         <TextView
             style="@style/CategoryStyle"
-            android:text="Price"
+            android:text="@string/price"
             android:textColor="@color/colorPrimaryDark" />
 
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:paddingLeft="4dp">
+            android:paddingStart="@dimen/unit_padding_layout"
+            tools:ignore="RtlSymmetry">
 
             <EditText
                 android:id="@+id/edit_price"
                 style="@style/EditorFieldStyle"
                 android:fontFamily="sans-serif"
-                android:hint="Price"
+                android:hint="@string/price"
                 android:inputType="number"
-                android:textSize="14sp" />
+                android:textSize="@dimen/editText_size" />
 
             <TextView
                 android:id="@+id/label_price_units"
                 style="@style/EditorUnitsStyle"
-                android:text="PLN"
+                tools:text="PLN"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
+                android:textSize="@dimen/units_text_size" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -93,29 +95,30 @@
 
         <TextView
             style="@style/CategoryStyle"
-            android:text="Quantity"
+            android:text="@string/quantity"
             android:textColor="@color/colorPrimaryDark" />
 
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:paddingLeft="4dp">
+            android:paddingStart="@dimen/unit_padding_layout"
+            tools:ignore="RtlSymmetry">
 
             <EditText
                 android:id="@+id/quantity_detail"
                 style="@style/EditorFieldStyle"
-                android:hint="Quantity"
+                android:fontFamily="sans-serif"
+                android:hint="@string/quantity"
                 android:inputType="number"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif" />
+                android:textSize="@dimen/editText_size" />
 
             <TextView
                 android:id="@+id/label_quantity_units"
                 style="@style/EditorUnitsStyle"
-                android:text="pcs"
+                android:text="@string/pcs"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
+                android:textSize="@dimen/units_text_size" />
         </RelativeLayout>
 
     </LinearLayout>

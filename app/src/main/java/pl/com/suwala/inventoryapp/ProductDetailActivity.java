@@ -1,8 +1,10 @@
 package pl.com.suwala.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Printer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,18 +25,17 @@ import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class ProductDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int PRODUCT_LOADER = 0;
-    ProductCursorAdapter cursorAdapter;
-    private static final int EXISTING_PRODUCT_LOADER = 0;
 
+    private static final int EXISTING_PRODUCT_LOADER = 0;
+    public static final String TAG = "ProductDetailActivity";
     private Uri productUri;
     private TextView productNameText;
     private TextView supplierNameText;
     private TextView priceText;
     private TextView quantityText;
-    private TextView supplierPhoneText;
-    private Button plusButton, minusButton;
     private InventoryUtils utils = new InventoryUtils();
+    private boolean deleteProductCalled;
+    private String supplierPhoneTextString;
 
     private int quantity = 0;
 
@@ -44,13 +46,17 @@ public class ProductDetailActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         productUri = intent.getData();
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
+        deleteProductCalled = false;
 
         productNameText = findViewById(R.id.product_name_detail);
         supplierNameText = findViewById(R.id.supplier_name_detail);
         priceText = findViewById(R.id.price_detail);
         quantityText = findViewById(R.id.quantity_detail);
-        plusButton = findViewById(R.id.plus_button_detail);
-        minusButton = findViewById(R.id.minus_button_detail);
+        Button plusButton = findViewById(R.id.plus_button_detail);
+        Button minusButton = findViewById(R.id.minus_button_detail);
+        Button editButton = findViewById(R.id.edit_button_detail);
+        Button deleteButton = findViewById(R.id.delete_button_detail);
+        Button phoneCallOrderButton = findViewById(R.id.phone_call_order_detail);
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +70,40 @@ public class ProductDetailActivity extends AppCompatActivity implements
                 updateQuantity(1);
             }
         });
+
+        editButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, EditorActivity.class);
+                intent.setData(productUri);
+                startActivity(intent);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: deleteButton CLICKED!!!!!!!!!");
+                deleteProduct();
+            }
+        });
+
+        phoneCallOrderButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(supplierPhoneTextString.isEmpty()){
+                    Toast.makeText(ProductDetailActivity.this, getString(R.string.no_supplier_phone),Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", supplierPhoneTextString, null));
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+
 
     }
 
@@ -80,6 +120,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
         if(quantity>0){
             quantity--;
             quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
+            saveProduct();
         }else{
             Toast.makeText(this, getString(R.string.error_subtract_quantity),
                     Toast.LENGTH_SHORT).show();
@@ -89,6 +130,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
     private void addQuantity() {
         quantity++;
         quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
+        saveProduct();
     }
 
     @Override
@@ -131,9 +173,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             Log.d("ProductDetailActivity", "onLoadFinished: supplierPhone " + supplierPhone);
             String price = cursor.getString(priceColumnIndex);
             quantity = cursor.getInt(quantityColumnIndex);
-
-
-
+            supplierPhoneTextString = supplierPhone;
             productNameText.setText(productName);
             supplierNameText.setText(supplierName);
             priceText.setText(utils.getPriceFormat(price, utils.getCurrencySymbol()));
@@ -143,7 +183,6 @@ public class ProductDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        saveProduct();
         productNameText.setText("");
         supplierNameText.setText("");
         priceText.setText("");
@@ -171,7 +210,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
                 Toast.makeText(this, getString(R.string.editor_insert_product_successful),
                         Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } else if(!deleteProductCalled){
             int rowsAffected = getContentResolver().update(productUri, values, null, null);
             if (rowsAffected == 0) {
                 Toast.makeText(this, getString(R.string.editor_update_product_failed),
@@ -182,4 +221,39 @@ public class ProductDetailActivity extends AppCompatActivity implements
             }
         }
     }
+
+    public void deleteProduct() {
+        Log.d(TAG, "onClick: deleteProduct() called");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Log.d(TAG, "onClick: positive button clicked");
+                deleteProductCalled = true;
+                deleteProductAction();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void deleteProductAction(){
+        if (productUri != null) {
+            int rowsDeleted = getContentResolver().delete(productUri, null, null);
+
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, getString(R.string.editor_delete_product_failed),Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.editor_delete_product_successful),Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
+    }
+
 }

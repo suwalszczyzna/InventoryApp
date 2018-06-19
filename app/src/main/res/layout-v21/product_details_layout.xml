@@ -54,7 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/minus"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhiteText"
+            android:backgroundTint="@color/colorWarning"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/quantity_detail"
             app:layout_constraintHorizontal_bias="0.5"
@@ -84,8 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            style="@style/action_button"
             android:text="@string/plus"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -94,10 +95,11 @@
 
         <Button
             android:id="@+id/delete_button_detail"
-            android:textColor="@color/colorWarning"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:textColor="@color/colorWarning"
             android:text="@string/delete"
             app:layout_constraintEnd_toStartOf="@+id/edit_button_detail"
             app:layout_constraintHorizontal_bias="0.5"
@@ -146,12 +148,12 @@
             tools:text="Sony Entertaiment" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/phone_call_order_detail"
+            style="@style/invert_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/order"
-            style="@style/invert_action_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -63,9 +63,19 @@
         <item name="android:textColor">@color/colorWarning</item>
     </style>
 
-    <style name="action_button">
-        <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorWhiteText</item>
+    <style name="empty_inv_subtitle_text">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:paddingTop">@dimen/subtitle_text_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">#A2AAB0</item>
+    </style>
+
+    <style name="empty_inv_title_text">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingTop">@dimen/fab_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
 

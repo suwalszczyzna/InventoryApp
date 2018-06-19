@@ -7,9 +7,9 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="editor_insert_product_successful">Product saved</string>
-    <string name="editor_insert_product_failed">Error with saving pet</string>
+    <string name="editor_insert_product_failed">Error with saving product</string>
     <string name="editor_update_product_successful">Product updated</string>
-    <string name="editor_update_product_failed">Error with updating pet</string>
+    <string name="editor_update_product_failed">Error with updating product</string>
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep Editing</string>
@@ -30,6 +30,13 @@
     <string name="price">Price</string>
     <string name="product">Product</string>
     <string name="supplier">Supplier</string>
-    <string name="order">Order</string>
+    <string name="order">Order now</string>
     <string name="error_subtract_quantity">Quantity must by grater than 0!</string>
+    <string name="no_supplier_phone">Supplier phone is empty</string>
+    <string name="required_fields">Product name, supplier name, price and quantity are required. Please, update empty fields</string>
+    <string name="image_of_empty_box">Image of empty box</string>
+    <string name="product_name_hint">Product Name</string>
+    <string name="supplier_name_hint">Supplier name</string>
+    <string name="supplier_phone_hint">Supplier phone</string>
+    <string name="pcs">pcs</string>
 </resources>

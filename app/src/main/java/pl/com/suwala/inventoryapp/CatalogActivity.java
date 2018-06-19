@@ -1,5 +1,6 @@
 package pl.com.suwala.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import pl.com.suwala.inventoryapp.data.ProductContract;
 import pl.com.suwala.inventoryapp.data.ProductCursorAdapter;
@@ -67,14 +69,19 @@ public class CatalogActivity extends AppCompatActivity implements
     }
 
     private void insertProduct() {
-        ContentValues values = new ContentValues();
-        values.put(ProductEntry.COLUMN_PRODUCT_NAME, "CD Player");
-        values.put(ProductEntry.COLUMN_PRICE, 7);
-        values.put(ProductEntry.COLUMN_QUANTITY, 14);
-        values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Sony");
-        values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "88456325");
+        ContentValues values;
+        for (int i = 0; i < 9; i++) {
+            values = new ContentValues();
+            values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Apples");
+            values.put(ProductEntry.COLUMN_PRICE, 5);
+            values.put(ProductEntry.COLUMN_QUANTITY, 124);
+            values.put(ProductEntry.COLUMN_SUPPLIER_NAME, "Another Apple Co");
+            values.put(ProductEntry.COLUMN_SUPPLIER_PHONE, "88456325");
 
-        Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+            Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+        }
+
+
     }
 
     private void deleteAllProducts() {
@@ -127,6 +134,8 @@ public class CatalogActivity extends AppCompatActivity implements
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
     }
+
+
 
 
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 
 import java.util.Objects;
 
+import pl.com.suwala.inventoryapp.R;
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 
 public class ProductProvider extends ContentProvider {
@@ -79,22 +80,9 @@ public class ProductProvider extends ContentProvider {
 
     private Uri insertProduct(Uri uri, ContentValues values) {
         String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
-        if (name == null) {
-            throw new IllegalArgumentException("Product requires a name");
-        }
         String supplierName = values.getAsString(ProductEntry.COLUMN_SUPPLIER_NAME);
-        if (supplierName == null) {
-            throw new IllegalArgumentException("Product requires a supplier name");
-        }
-
         Integer price = values.getAsInteger(ProductEntry.COLUMN_PRICE);
-        if (price != null && price < 0) {
-            throw new IllegalArgumentException("Product requires valid price");
-        }
         Integer quantity = values.getAsInteger(ProductEntry.COLUMN_PRICE);
-        if (quantity != null && quantity < 0) {
-            throw new IllegalArgumentException("Product requires valid quantity");
-        }
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         long id = database.insert(ProductEntry.TABLE_NAME, null, values);
