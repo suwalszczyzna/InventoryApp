@@ -71,7 +71,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener(){
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, EditorActivity.class);
@@ -90,12 +90,12 @@ public class ProductDetailActivity extends AppCompatActivity implements
             }
         });
 
-        phoneCallOrderButton.setOnClickListener(new View.OnClickListener(){
+        phoneCallOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(supplierPhoneTextString.isEmpty()){
-                    Toast.makeText(ProductDetailActivity.this, getString(R.string.no_supplier_phone),Toast.LENGTH_SHORT).show();
-                }else {
+                if (supplierPhoneTextString.isEmpty()) {
+                    Toast.makeText(ProductDetailActivity.this, getString(R.string.no_supplier_phone), Toast.LENGTH_SHORT).show();
+                } else {
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", supplierPhoneTextString, null));
                     startActivity(intent);
                 }
@@ -103,25 +103,25 @@ public class ProductDetailActivity extends AppCompatActivity implements
         });
 
 
-
-
     }
 
-    public void updateQuantity(int button){
-        switch (button){
-            case 0: addQuantity();
-            break;
-            case 1: subtractQuantity();
-            break;
+    public void updateQuantity(int button) {
+        switch (button) {
+            case 0:
+                addQuantity();
+                break;
+            case 1:
+                subtractQuantity();
+                break;
         }
     }
 
     private void subtractQuantity() {
-        if(quantity>0){
+        if (quantity > 0) {
             quantity--;
             quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
             saveProduct();
-        }else{
+        } else {
             Toast.makeText(this, getString(R.string.error_subtract_quantity),
                     Toast.LENGTH_SHORT).show();
         }
@@ -153,7 +153,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        String [] projection = {"*"};
+        String[] projection = {"*"};
         Cursor cursor = getContentResolver().query(productUri,
                 projection,
                 null,
@@ -210,7 +210,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
                 Toast.makeText(this, getString(R.string.editor_insert_product_successful),
                         Toast.LENGTH_SHORT).show();
             }
-        } else if(!deleteProductCalled){
+        } else if (!deleteProductCalled) {
             int rowsAffected = getContentResolver().update(productUri, values, null, null);
             if (rowsAffected == 0) {
                 Toast.makeText(this, getString(R.string.editor_update_product_failed),
@@ -243,14 +243,15 @@ public class ProductDetailActivity extends AppCompatActivity implements
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    public void deleteProductAction(){
+
+    public void deleteProductAction() {
         if (productUri != null) {
             int rowsDeleted = getContentResolver().delete(productUri, null, null);
 
             if (rowsDeleted == 0) {
-                Toast.makeText(this, getString(R.string.editor_delete_product_failed),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.editor_delete_product_failed), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.editor_delete_product_successful),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.editor_delete_product_successful), Toast.LENGTH_SHORT).show();
             }
         }
         finish();

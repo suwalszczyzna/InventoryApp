@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="create_dummy_data">Wstaw przykładowe dane</string>
+    <string name="clear_database">Wyczyść bazę</string>
+    <string name="editor_activity_title_new_product">Dodaj produkt</string>
+    <string name="editor_activity_title_edit_product">Edytuj produkt</string>
+    <string name="action_save">Zapisz</string>
+    <string name="action_delete">Usuń</string>
+    <string name="editor_insert_product_successful">Produkt zapisany</string>
+    <string name="editor_insert_product_failed">Błąd przy zapisie produktu</string>
+    <string name="editor_update_product_successful">Produkt zaktualizowany</string>
+    <string name="editor_update_product_failed">Błąd podczas aktualizacji produktu</string>
+    <string name="unsaved_changes_dialog_msg">Czy chcesz odrzucić wprowadzone zmiany?</string>
+    <string name="discard">Odrzuć</string>
+    <string name="keep_editing">Edytuj dalej</string>
+    <string name="editor_delete_product_successful">Produkt usunięty</string>
+    <string name="editor_delete_product_failed">Błąd przy usuwaniu produktu</string>
+    <string name="delete_dialog_msg">Czy na pewno chcesz usunąć ten produkt?</string>
+    <string name="delete">Usuń</string>
+    <string name="cancel">Anuluj</string>
+    <string name="category_overview">Przegląd kategorii</string>
+    <string name="there_is_no_product">Brak produktów</string>
+    <string name="add_something">Śmiało, dodaj coś!</string>
+    <string name="sale">Sprzedaj</string>
+    <string name="toast_message_cant_sell_more_nothings_left">Nie możesz sprzedać więcej!</string>
+    <string name="quantity">Ilość</string>
+    <string name="edit_product_button">Edytuj produkt</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="price">Cena</string>
+    <string name="product">Produkt</string>
+    <string name="supplier">Dostawca</string>
+    <string name="order">Zamów</string>
+    <string name="error_subtract_quantity">Ilośc musi być większa niż 0</string>
+    <string name="no_supplier_phone">Brak numeru telefonu dostawcy</string>
+    <string name="required_fields">Nazwa produktu, dostawca, cena i ilość nie mogą być puste</string>
+    <string name="image_of_empty_box">Obrazek pustego pudełka</string>
+    <string name="product_name_hint">Nazwa produktu</string>
+    <string name="supplier_phone_hint">Numer telefonu dostawcy</string>
+    <string name="supplier_name_hint">Dostawca</string>
+    <string name="pcs">szt.</string>
+</resources>

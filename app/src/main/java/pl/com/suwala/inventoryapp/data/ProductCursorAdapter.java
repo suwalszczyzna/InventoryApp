@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
+
 import java.util.Locale;
+
 import pl.com.suwala.inventoryapp.R;
 import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
@@ -60,19 +63,19 @@ public class ProductCursorAdapter extends CursorAdapter {
                 Cursor cursor = context.getContentResolver().query(
                         Uri.withAppendedPath(ProductEntry.CONTENT_URI, idString),
                         projection,
-                        ProductEntry.COLUMN_PRODUCT_NAME+"=?",
+                        ProductEntry.COLUMN_PRODUCT_NAME + "=?",
                         selectionArgs,
                         null);
                 cursor.moveToFirst();
                 int quantity = cursor.getInt(cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY));
-                if ( quantity >= 1){
+                if (quantity >= 1) {
                     ContentValues values1 = new ContentValues();
-                    values1.put(ProductEntry.COLUMN_QUANTITY, quantity-1);
+                    values1.put(ProductEntry.COLUMN_QUANTITY, quantity - 1);
                     context.getContentResolver().update(Uri.withAppendedPath(ProductEntry.CONTENT_URI, idString),
                             values1,
-                            ProductEntry.COLUMN_PRODUCT_NAME+"=?",
+                            ProductEntry.COLUMN_PRODUCT_NAME + "=?",
                             selectionArgs);
-                }else{
+                } else {
                     Toast.makeText(context, context.getResources().getString(R.string.toast_message_cant_sell_more_nothings_left), Toast.LENGTH_SHORT).show();
                 }
             }

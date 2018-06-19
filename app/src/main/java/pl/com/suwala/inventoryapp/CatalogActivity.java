@@ -136,6 +136,4 @@ public class CatalogActivity extends AppCompatActivity implements
     }
 
 
-
-
 }

@@ -11,42 +11,42 @@
         android:padding="16dp">
 
         <TextView
-        android:id="@+id/product_name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/product"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/product_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/product"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/product_name_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Main_list_text"
-        app:layout_constraintStart_toStartOf="@+id/product_name_label"
-        app:layout_constraintTop_toBottomOf="@+id/product_name_label"
-        tools:text="CD Player super" />
+        <TextView
+            android:id="@+id/product_name_detail"
+            style="@style/Main_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/product_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/product_name_label"
+            tools:text="CD Player super" />
 
-    <TextView
-        android:id="@+id/price_label_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/price"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_name_detail" />
+        <TextView
+            android:id="@+id/price_label_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_name_detail" />
 
-    <TextView
-        android:id="@+id/price_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Main_list_text"
-        tools:text="15.00 USD"
-        app:layout_constraintStart_toStartOf="@+id/price_label_detail"
-        app:layout_constraintTop_toBottomOf="@+id/price_label_detail" />
+        <TextView
+            android:id="@+id/price_detail"
+            style="@style/Main_list_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/price_label_detail"
+            app:layout_constraintTop_toBottomOf="@+id/price_label_detail"
+            tools:text="15.00 USD" />
 
         <Button
             android:id="@+id/minus_button_detail"
@@ -94,47 +94,47 @@
 
         <Button
             android:id="@+id/delete_button_detail"
-            android:textColor="@color/colorWarning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/delete"
+            android:textColor="@color/colorWarning"
             app:layout_constraintEnd_toStartOf="@+id/edit_button_detail"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edit_button_detail" />
 
-    <Button
-        android:id="@+id/edit_button_detail"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/edit_product_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/delete_button_detail"
-        app:layout_constraintTop_toBottomOf="@+id/quantity_detail"
-        style="@style/action_button" />
+        <Button
+            android:id="@+id/edit_button_detail"
+            style="@style/action_button"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/edit_product_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/delete_button_detail"
+            app:layout_constraintTop_toBottomOf="@+id/quantity_detail" />
     </android.support.constraint.ConstraintLayout>
 
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:padding="16dp"
-        android:background="@color/colorPrimary">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/supplier_name_label_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhiteText"
-            android:text="@string/supplier" />
+            android:text="@string/supplier"
+            android:textColor="@color/colorWhiteText" />
 
         <TextView
             android:id="@+id/supplier_name_detail"
@@ -147,11 +147,11 @@
 
         <Button
             android:id="@+id/button"
+            style="@style/invert_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/order"
-            style="@style/invert_action_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

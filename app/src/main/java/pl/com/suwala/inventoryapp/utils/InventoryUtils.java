@@ -6,7 +6,7 @@ import java.util.Locale;
 
 public class InventoryUtils {
 
-    public String getCurrencySymbol(){
+    public String getCurrencySymbol() {
         Currency currency = null;
         String symbol = "$";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -16,11 +16,11 @@ public class InventoryUtils {
         return symbol;
     }
 
-    public String getPriceFormat(String price, String symbol){
-        return String.format("%s %s",price,symbol);
+    public String getPriceFormat(String price, String symbol) {
+        return String.format("%s %s", price, symbol);
     }
 
-    public String getQuantityFormat(String quantity){
+    public String getQuantityFormat(String quantity) {
         return String.format("%s pcs", quantity);
     }
 }

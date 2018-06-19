@@ -90,7 +90,7 @@ public class EditorActivity extends AppCompatActivity implements
         String priceString = priceText.getText().toString().trim();
         String quantityString = quantityText.getText().toString().trim();
 
-        if(productNameString.isEmpty() || supplierNameString.isEmpty() || priceString.isEmpty() || quantityString.isEmpty()){
+        if (productNameString.isEmpty() || supplierNameString.isEmpty() || priceString.isEmpty() || quantityString.isEmpty()) {
             Toast.makeText(this, getString(R.string.required_fields),
                     Toast.LENGTH_LONG).show();
             return;

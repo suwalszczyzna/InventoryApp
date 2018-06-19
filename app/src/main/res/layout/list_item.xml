@@ -15,16 +15,16 @@
 
         <TextView
             android:id="@+id/product_name_detail"
+            style="@style/Main_list_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Main_list_text"
             tools:text="Product name" />
 
         <TextView
             android:id="@+id/price"
+            style="@style/subtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/subtext"
             tools:text="$5.50" />
 
     </LinearLayout>
