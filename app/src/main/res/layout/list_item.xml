@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        android:padding="@dimen/small_padding_list_item">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/product_name_detail"
-            style="@style/Main_list_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="Product name" />
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:padding="@dimen/small_padding_list_item">
 
-        <TextView
-            android:id="@+id/price"
-            style="@style/subtext"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/product_name_detail"
+                style="@style/Main_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Product name" />
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/subtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="$5.50" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="$5.50" />
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:padding="@dimen/small_padding_list_item">
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/colorPrimaryDark"
+                tools:text="32" />
+
+            <TextView
+                android:id="@+id/quantity_text"
+                style="@style/subtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity"
+                tools:text="Quantity" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sale_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:focusable="false"
+            android:text="@string/sale"
+            tools:text="Sale" />
 
     </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:padding="@dimen/small_padding_list_item">
-
-        <TextView
-            android:id="@+id/quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/colorPrimaryDark"
-            tools:text="32" />
-
-        <TextView
-            android:id="@+id/quantity_text"
-            style="@style/subtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/quantity"
-            tools:text="Quantity" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/sale_button"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:focusable="false"
-        android:text="@string/sale"
-        tools:text="Sale" />
-
-</LinearLayout>
+</layout>

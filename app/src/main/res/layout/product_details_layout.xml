@@ -1,159 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/product_name_label"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/product_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/product"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/product_name_detail"
+                style="@style/Main_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/product_name_label"
+                app:layout_constraintTop_toBottomOf="@+id/product_name_label"
+                tools:text="CD Player super" />
+
+            <TextView
+                android:id="@+id/price_label_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/product_name_detail" />
+
+            <TextView
+                android:id="@+id/price_detail"
+                style="@style/Main_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/price_label_detail"
+                app:layout_constraintTop_toBottomOf="@+id/price_label_detail"
+                tools:text="15.00 USD" />
+
+            <Button
+                android:id="@+id/minus_button_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/minus"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/quantity_detail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/quantity_detail" />
+
+            <TextView
+                android:id="@+id/quantity_detail"
+                style="@style/EditorFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/plus_button_detail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/minus_button_detail"
+                app:layout_constraintTop_toBottomOf="@+id/price_detail"
+                tools:text="15 pcs" />
+
+            <Button
+                android:id="@+id/plus_button_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/plus"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/quantity_detail"
+                app:layout_constraintTop_toTopOf="@+id/quantity_detail" />
+
+            <Button
+                android:id="@+id/delete_button_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/delete"
+                android:textColor="@color/colorWarning"
+                app:layout_constraintEnd_toStartOf="@+id/edit_button_detail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_button_detail" />
+
+            <Button
+                android:id="@+id/edit_button_detail"
+                style="@style/action_button"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/edit_product_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/delete_button_detail"
+                app:layout_constraintTop_toBottomOf="@+id/quantity_detail" />
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/product"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/product_name_detail"
-            style="@style/Main_list_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/product_name_label"
-            app:layout_constraintTop_toBottomOf="@+id/product_name_label"
-            tools:text="CD Player super" />
-
-        <TextView
-            android:id="@+id/price_label_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_name_detail" />
-
-        <TextView
-            android:id="@+id/price_detail"
-            style="@style/Main_list_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/price_label_detail"
-            app:layout_constraintTop_toBottomOf="@+id/price_label_detail"
-            tools:text="15.00 USD" />
-
-        <Button
-            android:id="@+id/minus_button_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/minus"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/quantity_detail"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/quantity_detail" />
-
-        <TextView
-            android:id="@+id/quantity_detail"
-            style="@style/EditorFieldStyle"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/plus_button_detail"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/minus_button_detail"
-            app:layout_constraintTop_toBottomOf="@+id/price_detail"
-            tools:text="15 pcs" />
-
-        <Button
-            android:id="@+id/plus_button_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/plus"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/quantity_detail"
-            app:layout_constraintTop_toTopOf="@+id/quantity_detail" />
-
-        <Button
-            android:id="@+id/delete_button_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/delete"
-            android:textColor="@color/colorWarning"
-            app:layout_constraintEnd_toStartOf="@+id/edit_button_detail"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_button_detail" />
-
-        <Button
-            android:id="@+id/edit_button_detail"
-            style="@style/action_button"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/edit_product_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/delete_button_detail"
-            app:layout_constraintTop_toBottomOf="@+id/quantity_detail" />
-    </android.support.constraint.ConstraintLayout>
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/supplier_name_label_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/supplier"
-            android:textColor="@color/colorWhiteText" />
-
-        <TextView
-            android:id="@+id/supplier_name_detail"
-            style="@style/Main_list_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhiteText"
-            app:layout_constraintTop_toBottomOf="@id/supplier_name_label_detail"
-            tools:text="Sony Entertaiment" />
-
-        <Button
-            android:id="@+id/button"
-            style="@style/invert_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/order"
+            android:background="@color/colorPrimary"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/supplier_name_label_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/supplier"
+                android:textColor="@color/colorWhiteText" />
+
+            <TextView
+                android:id="@+id/supplier_name_detail"
+                style="@style/Main_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhiteText"
+                app:layout_constraintTop_toBottomOf="@id/supplier_name_label_detail"
+                tools:text="Sony Entertaiment" />
+
+            <Button
+                android:id="@+id/phone_call_order_detail"
+                style="@style/invert_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/order"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
+</layout>
