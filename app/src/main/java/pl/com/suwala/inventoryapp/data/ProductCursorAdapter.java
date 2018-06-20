@@ -3,6 +3,7 @@ package pl.com.suwala.inventoryapp.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.icu.util.Currency;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 import java.util.Locale;
 
 import pl.com.suwala.inventoryapp.R;
+import pl.com.suwala.inventoryapp.databinding.ListItemBinding;
 import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class ProductCursorAdapter extends CursorAdapter {
@@ -28,15 +30,14 @@ public class ProductCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+        ListItemBinding binding = ListItemBinding.inflate(LayoutInflater.from(context), parent, false);
+
+        return binding.getRoot();
     }
 
-    @Override
+     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        TextView productNameTextView = view.findViewById(R.id.product_name_detail);
-        TextView priceTextView = view.findViewById(R.id.price);
-        TextView quantityTextView = view.findViewById(R.id.quantity);
-        Button saleButton = view.findViewById(R.id.sale_button);
+        ListItemBinding binding = DataBindingUtil.getBinding(view);
 
         int productNameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE);
@@ -48,13 +49,13 @@ public class ProductCursorAdapter extends CursorAdapter {
 
         InventoryUtils utils = new InventoryUtils();
 
-        productNameTextView.setText(productName);
-        priceTextView.setText(utils.getPriceFormat(String.format("%s", price), utils.getCurrencySymbol()));
-        quantityTextView.setText(utils.getQuantityFormat(quantity));
+        binding.productNameDetail.setText(productName);
+        binding.price.setText(utils.getPriceFormat(String.format("%s", price), utils.getCurrencySymbol()));
+        binding.quantity.setText(utils.getQuantityFormat(quantity));
 
         final String[] selectionArgs = {productName};
         final String idString = cursor.getString(cursor.getColumnIndex(ProductEntry._ID));
-        saleButton.setOnClickListener(new View.OnClickListener() {
+        binding.saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

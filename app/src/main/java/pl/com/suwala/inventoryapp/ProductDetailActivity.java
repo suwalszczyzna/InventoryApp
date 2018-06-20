@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
 import pl.com.suwala.inventoryapp.data.ProductCursorAdapter;
+import pl.com.suwala.inventoryapp.databinding.ProductDetailsLayoutBinding;
 import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class ProductDetailActivity extends AppCompatActivity implements
@@ -29,49 +31,35 @@ public class ProductDetailActivity extends AppCompatActivity implements
     private static final int EXISTING_PRODUCT_LOADER = 0;
     public static final String TAG = "ProductDetailActivity";
     private Uri productUri;
-    private TextView productNameText;
-    private TextView supplierNameText;
-    private TextView priceText;
-    private TextView quantityText;
     private InventoryUtils utils = new InventoryUtils();
     private boolean deleteProductCalled;
     private String supplierPhoneTextString;
-
     private int quantity = 0;
+    private ProductDetailsLayoutBinding bind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.product_details_layout);
+        bind = DataBindingUtil.setContentView(this, R.layout.product_details_layout);
         Intent intent = getIntent();
         productUri = intent.getData();
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         deleteProductCalled = false;
 
-        productNameText = findViewById(R.id.product_name_detail);
-        supplierNameText = findViewById(R.id.supplier_name_detail);
-        priceText = findViewById(R.id.price_detail);
-        quantityText = findViewById(R.id.quantity_detail);
-        Button plusButton = findViewById(R.id.plus_button_detail);
-        Button minusButton = findViewById(R.id.minus_button_detail);
-        Button editButton = findViewById(R.id.edit_button_detail);
-        Button deleteButton = findViewById(R.id.delete_button_detail);
-        Button phoneCallOrderButton = findViewById(R.id.phone_call_order_detail);
-
-        plusButton.setOnClickListener(new View.OnClickListener() {
+        bind.plusButtonDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateQuantity(0);
             }
         });
-        minusButton.setOnClickListener(new View.OnClickListener() {
+        bind.minusButtonDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateQuantity(1);
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        bind.editButtonDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailActivity.this, EditorActivity.class);
@@ -80,7 +68,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        bind.deleteButtonDetail.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
@@ -90,7 +78,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
             }
         });
 
-        phoneCallOrderButton.setOnClickListener(new View.OnClickListener() {
+        bind.phoneCallOrderDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (supplierPhoneTextString.isEmpty()) {
@@ -119,7 +107,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
     private void subtractQuantity() {
         if (quantity > 0) {
             quantity--;
-            quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
+            bind.quantityDetail.setText(utils.getQuantityFormat(String.format("%s", quantity)));
             saveProduct();
         } else {
             Toast.makeText(this, getString(R.string.error_subtract_quantity),
@@ -129,7 +117,7 @@ public class ProductDetailActivity extends AppCompatActivity implements
 
     private void addQuantity() {
         quantity++;
-        quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
+        bind.quantityDetail.setText(utils.getQuantityFormat(String.format("%s", quantity)));
         saveProduct();
     }
 
@@ -174,19 +162,19 @@ public class ProductDetailActivity extends AppCompatActivity implements
             String price = cursor.getString(priceColumnIndex);
             quantity = cursor.getInt(quantityColumnIndex);
             supplierPhoneTextString = supplierPhone;
-            productNameText.setText(productName);
-            supplierNameText.setText(supplierName);
-            priceText.setText(utils.getPriceFormat(price, utils.getCurrencySymbol()));
-            quantityText.setText(utils.getQuantityFormat(String.format("%s", quantity)));
+            bind.productNameDetail.setText(productName);
+            bind.supplierNameDetail.setText(supplierName);
+            bind.priceDetail.setText(utils.getPriceFormat(price, utils.getCurrencySymbol()));
+            bind.quantityDetail.setText(utils.getQuantityFormat(String.format("%s", quantity)));
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        productNameText.setText("");
-        supplierNameText.setText("");
-        priceText.setText("");
-        quantityText.setText("");
+        bind.productNameDetail.setText("");
+        bind.supplierNameDetail.setText("");
+        bind.priceDetail.setText("");
+        bind.quantityDetail.setText("");
     }
 
     private void saveProduct() {

@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import pl.com.suwala.inventoryapp.data.ProductContract;
 import pl.com.suwala.inventoryapp.data.ProductCursorAdapter;
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
+import pl.com.suwala.inventoryapp.databinding.ActivityCatalogBinding;
 
 public class CatalogActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -37,9 +39,9 @@ public class CatalogActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_catalog);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ActivityCatalogBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_catalog);
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
@@ -47,15 +49,12 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
-        ListView productListView = findViewById(R.id.list);
-
-        View emptyView = findViewById(R.id.empty_view);
-        productListView.setEmptyView(emptyView);
+        binding.list.setEmptyView(binding.emptyView);
 
         cursorAdapter = new ProductCursorAdapter(this, null);
-        productListView.setAdapter(cursorAdapter);
+        binding.list.setAdapter(cursorAdapter);
 
-        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(CatalogActivity.this, ProductDetailActivity.class);
@@ -80,8 +79,6 @@ public class CatalogActivity extends AppCompatActivity implements
 
             Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
         }
-
-
     }
 
     private void deleteAllProducts() {

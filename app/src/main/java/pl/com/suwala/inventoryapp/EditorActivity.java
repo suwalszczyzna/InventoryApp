@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.icu.util.Currency;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -19,13 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 import pl.com.suwala.inventoryapp.data.ProductContract.ProductEntry;
+import pl.com.suwala.inventoryapp.databinding.ActivityEditorBinding;
 import pl.com.suwala.inventoryapp.utils.InventoryUtils;
 
 public class EditorActivity extends AppCompatActivity implements
@@ -34,11 +31,7 @@ public class EditorActivity extends AppCompatActivity implements
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
     private Uri currentProductUri;
-    private EditText productNameText;
-    private EditText supplierNameText;
-    private EditText priceText;
-    private EditText quantityText;
-    private EditText supplierPhoneText;
+    ActivityEditorBinding bind;
 
     private boolean productHasChanged = false;
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
@@ -54,7 +47,7 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editor);
+        bind = DataBindingUtil.setContentView(this, R.layout.activity_editor);
         Intent intent = getIntent();
         currentProductUri = intent.getData();
         if (currentProductUri == null) {
@@ -66,29 +59,22 @@ public class EditorActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
         }
 
-        productNameText = findViewById(R.id.edit_product_name);
-        supplierNameText = findViewById(R.id.edit_supplier_name);
-        supplierPhoneText = findViewById(R.id.edit_supplier_phone);
-        priceText = findViewById(R.id.edit_price);
-        quantityText = findViewById(R.id.quantity_detail);
-        TextView labelUnit = findViewById(R.id.label_price_units);
+        bind.labelPriceUnits.setText(utils.getCurrencySymbol());
 
-        labelUnit.setText(utils.getCurrencySymbol());
-
-        productNameText.setOnTouchListener(touchListener);
-        supplierNameText.setOnTouchListener(touchListener);
-        supplierPhoneText.setOnTouchListener(touchListener);
-        priceText.setOnTouchListener(touchListener);
-        quantityText.setOnTouchListener(touchListener);
+        bind.editProductName.setOnTouchListener(touchListener);
+        bind.editSupplierName.setOnTouchListener(touchListener);
+        bind.editSupplierPhone.setOnTouchListener(touchListener);
+        bind.editPrice.setOnTouchListener(touchListener);
+        bind.quantityDetail.setOnTouchListener(touchListener);
 
     }
 
     private void saveProduct() {
-        String productNameString = productNameText.getText().toString().trim();
-        String supplierNameString = supplierNameText.getText().toString().trim();
-        String supplierPhoneString = supplierPhoneText.getText().toString().trim();
-        String priceString = priceText.getText().toString().trim();
-        String quantityString = quantityText.getText().toString().trim();
+        String productNameString = bind.editProductName.getText().toString().trim();
+        String supplierNameString = bind.editSupplierName.getText().toString().trim();
+        String supplierPhoneString = bind.editSupplierPhone.getText().toString().trim();
+        String priceString = bind.editPrice.getText().toString().trim();
+        String quantityString = bind.quantityDetail.getText().toString().trim();
 
         if (productNameString.isEmpty() || supplierNameString.isEmpty() || priceString.isEmpty() || quantityString.isEmpty()) {
             Toast.makeText(this, getString(R.string.required_fields),
@@ -244,21 +230,21 @@ public class EditorActivity extends AppCompatActivity implements
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
 
-            productNameText.setText(productName);
-            supplierNameText.setText(supplierName);
-            supplierPhoneText.setText(supplierPhone);
-            priceText.setText(String.format("%s", price));
-            quantityText.setText(String.format("%s", quantity));
+            bind.editProductName.setText(productName);
+            bind.editSupplierName.setText(supplierName);
+            bind.editSupplierPhone.setText(supplierPhone);
+            bind.editPrice.setText(String.format("%s", price));
+            bind.quantityDetail.setText(String.format("%s", quantity));
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        productNameText.setText("");
-        supplierNameText.setText("");
-        supplierPhoneText.setText("");
-        priceText.setText("");
-        quantityText.setText("");
+        bind.editProductName.setText("");
+        bind.editSupplierName.setText("");
+        bind.editSupplierPhone.setText("");
+        bind.editPrice.setText("");
+        bind.quantityDetail.setText("");
 
     }
 
